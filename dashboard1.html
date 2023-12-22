@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Rate</title>
+  <style>
+    /* Your existing CSS styles here */
+
+    /* Style for the navigation bar */
+    nav {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      margin: 0 10px;
+      display: inline-block;
+      cursor: pointer; /* Add cursor style to indicate the link is clickable */
+      text-decoration: none;
+    }
+
+    nav a.active {
+      border-bottom: 2px solid #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a onclick="changeInnerContent('Oil')" id="oilLink">Oil</a>
+    <a onclick="changeInnerContent('Water')" id="waterLink">Water</a>
+    <a onclick="changeInnerContent('Gas')" id="gasLink">Gas</a>
+  </nav>
+
+  <div id="chart-container"></div>
+  <div id="common-tooltip" class="tooltip" style="display: none;"></div>
+
+  <div id="slider-range"></div>
+
+  <!-- Include the Plotly library -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Include the D3.js library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-simple-slider"></script>
+
+  <script>
+    let loadedScript = null;
+  let chartContainer = document.getElementById('chart-container');
+  let layout;
+
+// Set the dimensions and margins of the graph
+const margin = { top: 70, right: 60, bottom: 50, left: 80 };
+const width = 1600 - margin.left - margin.right;
+const height = 800;
+
+
+// Create an empty array to store data traces
+const dataTraces = [];
+
+function changeInnerContent(subNavItem) {
+
+    if (loadedScript) {
+    loadedScript.remove();
+  }
+
+  Plotly.purge(chartContainer);
+
+  // Remove the existing chart
+  chartContainer.innerHTML = '';
+
+  // Remove the 'active' class from all links
+  document.getElementById('oilLink').classList.remove('active');
+  document.getElementById('waterLink').classList.remove('active');
+  document.getElementById('gasLink').classList.remove('active');
+
+  // Clear the existing data traces
+  dataTraces.length = 0;
+
+  switch (subNavItem) {
+    case 'Oil':
+      layout = {
+        title: 'Oil Rate Over Time',
+        xaxis: {
+          title: 'Months',
+        },
+        yaxis: {
+          title: 'Oil Rate (klpd)',
+        },
+        margin: {
+          top: 70,
+          right: 60,
+          bottom: 50,
+          left: 80,
+        },
+        showlegend: true,
+        hovermode: 'closest',
+        uirevision: 'true',
+        xaxis_type: 'linear',
+        height: 800
+      };
+      loadedScript = loadScript('script_plotly.js');
+      document.getElementById('oilLink').classList.add('active');
+      break;
+    case 'Water':
+      layout = {
+        title: 'Water Rate Over Time',
+        xaxis: {
+          title: 'Date',
+        },
+        yaxis: {
+          title: 'Water Rate (klpd)',
+        },
+        margin: {
+          top: 70,
+          right: 60,
+          bottom: 50,
+          left: 80,
+        },
+        showlegend: true,
+        hovermode: 'closest',
+        uirevision: 'true',
+        xaxis_type: 'linear',
+        height: 800
+      };
+      loadedScript = loadScript('script_water.js');
+      document.getElementById('waterLink').classList.add('active');
+      break;
+    case 'Gas':
+      layout = {
+        title: 'Gas Rate Over Time',
+        xaxis: {
+          title: 'Months',
+        },
+        yaxis: {
+          title: 'Gas Rate (mscum d)',
+        },
+        margin: {
+          top: 70,
+          right: 60,
+          bottom: 50,
+          left: 80,
+        },
+        showlegend: true,
+        hovermode: 'closest',
+        uirevision: 'true',
+        xaxis_type: 'linear',
+        height: 800
+      };
+      loadedScript = loadScript('script_gas.js');
+      document.getElementById('gasLink').classList.add('active');
+      break;
+    default:
+      console.error('Invalid selection');
+  }
+}
+  // Remove the previously loaded script
+  
+
+function loadScript(scriptPath) {
+  var script = document.createElement('script');
+  script.src = scriptPath;
+  document.head.appendChild(script);
+  return script;
+}
+
+window.onload = function () {
+    changeInnerContent('Oil');
+  };
+  </script>
+</body>
+
+</html>
