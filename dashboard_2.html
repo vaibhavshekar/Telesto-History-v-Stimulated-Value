@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oil and Gas Navigation</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .legend {
+      position: absolute;
+      top: 70px;
+      left: 140px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .legend-line {
+      width: 30px;
+      height: 2px;
+      margin-right: 10px;
+    }
+
+    .legend-line.red {
+      background-color: red;
+    }
+
+    .legend-line.blue {
+      background-color: blue;
+    }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ddd;
+            padding: 10px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" id="oilLink">Oil</a>
+        <a href="#" id="waterLink">water</a>
+        <a href="#" id="gasLink">Gas</a>
+    </div>
+
+    <label for="well-select" style="font-size: 20px;">SELECT WELL:</label>
+    <select id="well-select" style="height: 20px;">
+      <option value="HJN023">HJN023</option>
+      <option value="HJN024">HJN024</option>
+      <option value="HJN024D">HJN024D</option>
+      <option value="HJN029">HJN029</option>
+      <option value="HJN030">HJN030</option>
+      <option value="HJN031">HJN031</option>
+      <option value="HJN032">HJN032</option>
+      <option value="HJN033">HJN033</option>
+      <option value="HJN034">HJN034</option>
+      <option value="HJN035">HJN035</option>
+      <option value="HJN036">HJN036</option>
+      <option value="HJN037">HJN037</option>
+      <option value="HJN039">HJN039</option>
+      <option value="HJN040">HJN040</option>
+      <option value="HJN041">HJN041</option>
+      <option value="HJN041E">HJN041E</option>
+      <option value="HJN043">HJN043</option>
+      <option value="HJN044">HJN044</option>
+      <option value="HJN045">HJN045</option>
+      <option value="HJN046">HJN046</option>
+      <option value="HJN047">HJN047</option>
+      <option value="HJN048">HJN048</option>
+      <option value="HJN048D">HJN048D</option>
+      <option value="HJN049">HJN049</option>
+      <option value="HJN049D">HJN049D</option>
+      <option value="HJN050">HJN050</option>
+      <option value="HJN051">HJN051</option>
+      <option value="HJN052">HJN052</option>
+      <option value="HJN053">HJN053</option>
+      <option value="HJN056">HJN056</option>
+      <option value="HJN058">HJN058</option>
+      <option value="HJN059">HJN059</option>
+      <option value="HJN067">HJN067</option>
+      <option value="HJN069">HJN069</option>
+
+      <option value="MKM001">MKM001</option>
+      <option value="MKM002">MKM002</option>
+      <option value="MKM003">MKM003</option>
+      <option value="MKM004">MKM004</option>
+      <option value="MKM005">MKM005</option>
+      <option value="MKM006">MKM006</option>
+      <option value="MKM007">MKM007</option>
+      <option value="MKM008">MKM008</option>
+      <option value="MKM009">MKM009</option>
+      <option value="MKM010">MKM010</option>
+      <option value="MKM011">MKM011</option>
+      <option value="MKM012">MKM012</option>
+      <option value="MKM013">MKM013</option>
+      <option value="MKM014">MKM014</option>
+      <option value="MKM015">MKM015</option>
+      <option value="MKM016">MKM016</option>
+      <option value="MKM017">MKM017</option>
+      <option value="MKM018">MKM018</option>
+      <option value="MKM019">MKM019</option>
+      <option value="MKM020">MKM020</option>
+      <option value="MKM021">MKM021</option>
+      <option value="MKM022">MKM022</option>
+      <option value="MKM023">MKM023</option>
+      <option value="MKM024">MKM024</option>
+      <option value="MKM025">MKM025</option>
+      <option value="MKM026">MKM026</option>
+      <option value="MKM027">MKM027</option>
+      <option value="MKM028">MKM028</option>
+      <option value="MKM029">MKM029</option>
+      <option value="MKM030">MKM030</option>
+      <option value="MKM031">MKM031</option>
+      <option value="MKM032">MKM032</option>
+      <option value="MKM033">MKM033</option>
+      <option value="MKM034">MKM034</option>
+      <option value="MKM035">MKM035</option>
+      <option value="MKM036">MKM036</option>
+      <option value="MKM037">MKM037</option>
+      <option value="MKM038">MKM038</option>
+      <option value="MKM039">MKM039</option>
+      <option value="MKM040">MKM040</option>
+      <option value="MKM041">MKM041</option>
+      <option value="MKM042">MKM042</option>
+      <option value="MKM043">MKM043</option>
+      <option value="MKM043D">MKM043D</option>
+      <option value="MKM045">MKM044</option>
+      <option value="MKM045">MKM045</option>
+      <option value="MKM046">MKM046</option>
+      <option value="MKM047">MKM047</option>
+      <option value="MKM048">MKM048</option>
+      <option value="MKM049">MKM049</option>
+      <option value="MKM050">MKM050</option>
+      <option value="MKM052">MKM052</option>
+      <option value="MKM053">MKM053</option>
+      <option value="MKM054">MKM054</option>
+      <option value="MKM055">MKM055</option>
+      <option value="MKM056">MKM056</option>
+      <option value="MKM057">MKM057</option>
+      <option value="MKM060D">MKM060D</option>
+      <option value="MKM061">MKM061</option>
+      <option value="MKM063">MKM063</option>
+      <option value="MKM064">MKM064</option>
+      <option value="MKM065">MKM065</option>
+      <option value="MKM066">MKM066</option>
+      <option value="MKM067">MKM067</option>
+      <option value="MKM068">MKM068</option>
+      <option value="MKM069">MKM069</option>
+    </select>
+
+    <div id="chart-container-oil"></div>
+    <div id="chart-container-water"></div>
+    <div id="chart-container-gas"></div>
+
+    <script src="dsh_2.js"></script>
+</body>
+</html>
